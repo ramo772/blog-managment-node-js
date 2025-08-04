@@ -16,8 +16,7 @@ const blogSchema = new mongoose.Schema({
     maxlength: 1024
   },
   category: {
-    type: String,
-    required: true,
+    type: [String],
     minlength: 3,
     maxlength: 50
   },

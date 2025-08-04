@@ -17,7 +17,7 @@ describe('auth middleware', () => {
     return request(server)
       .post('/api/blogs')
       .set('x-auth-token', token)
-      .send({ title: 'blog title', content: 'blog content', category: 'category', userId: user._id });
+      .send({ title: 'blog title', content: 'blog content', category: ['category'], userId: user._id });
   }
 
   beforeEach(async() => {

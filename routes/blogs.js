@@ -7,7 +7,7 @@ const validateRequest = require('../middleware/validateRequest');
 const validateObjectId = require('../middleware/validateObjectId');
 const { createBlogValidation, updateBlogValidation } = require('../requests/blogValidations');
 const auth = require('../middleware/auth');
-const { createBlog, updateBlog, deleteBlog, getAll, getOne, search, getByCategory } = require('../controllers/blogController');
+const { createBlog, updateBlog, deleteBlog, getAll, getOne } = require('../controllers/blogController');
 
 
 
@@ -23,53 +23,7 @@ const { createBlog, updateBlog, deleteBlog, getAll, getOne, search, getByCategor
  *         description: A list of blog posts
  */
 router.get('/', getAll);
-/**
- * @swagger
- * /api/blogs/search:
- *   get:
- *     summary: Search blogs by title or content
- *     parameters:
- *       - in: query
- *         name: searchQuery
- *         required: true
- *         schema:
- *           type: string
- *           example: "writting"
- *         description: The search query to filter blogs
- *       - in: query
- *         name: page
- *         schema:
- *           type: integer
- *         description: Page number for pagination
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *         description: Number of blogs per page
- *     responses:
- *       200:
- *         description: Blogs fetched successfully
- */
-router.get('/search', search);
 
-
-/**
- * @swagger
- * /api/blogs/category/{category}:
- *   get:
- *     summary: Get blogs by category
- *     parameters:
- *       - in: path
- *         name: category
- *         required: true
- *         schema:
- *           type: string
- *         description: The category of the blogs to retrieve
- *     responses:
- *       200:
- *         description: Blogs fetched successfully by category
- */
-router.get('/category/:category', getByCategory)
 
 /**
  * @swagger
@@ -116,8 +70,9 @@ router.get('/:id', [validateObjectId], getOne);
  *                 type: string
  *                 example: "This is the content of my first blog."
  *               category:
- *                 type: string
- *                 example: "Technology"
+ *                 type: array
+ *                 example: ["Technology", "Programming"]
+ * 
  *     responses:
  *       200:
  *         description: Blog post created successfully
@@ -154,7 +109,8 @@ router.post('/', [auth, validateRequest(createBlogValidation)], createBlog);
  *                 type: string
  *                 example: "This is the updated content of the blog."
  *               category:
- *                 type: string
+ *                 type: array
+ *                 example: ["Programming", "Web Development"]
  *     responses:
  *       200:
  *         description: Blog post updated successfully

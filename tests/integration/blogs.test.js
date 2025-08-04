@@ -16,8 +16,8 @@ describe('/api/blogs', () => {
   describe('GET /', () => {
     it('should return all blogs', async () => {
       const blogs = [
-        { title: 'blog1', content: 'This is a test blog content.', category: 'Test Category', userId: new mongoose.Types.ObjectId() },
-        { title: 'blog2', content: 'This is another test blog content.', category: 'Test Category', userId: new mongoose.Types.ObjectId() },
+        { title: 'blog1', content: 'This is a test blog content.', category: ['Test Category'], userId: new mongoose.Types.ObjectId() },
+        { title: 'blog2', content: 'This is another test blog content.', category: ['Test Category'], userId: new mongoose.Types.ObjectId() },
       ];
 
       await Blog.collection.insertMany(blogs);
@@ -36,7 +36,7 @@ describe('/api/blogs', () => {
       const blog = new Blog({
         title: 'blog1',
         content: 'This is a test blog content.',
-        category: 'Test Category',
+        category: ['Test Category'],
         userId: new mongoose.Types.ObjectId()
       });
       await blog.save();
@@ -88,7 +88,7 @@ describe('/api/blogs', () => {
     beforeEach(async () => {
       title = 'blog1';
       content = 'This is a test blog content.';
-      category = 'Test Category';
+      category = ['Test Category'];
       const user = new User({ name: 'Test User', email: 'test2@example.com', password: 'Wesdwesd!@333' });
       await user.save();
 
@@ -148,7 +148,7 @@ describe('/api/blogs', () => {
       await user.save();
 
       token = user.generateAuthToken();
-      blog = new Blog({ title: 'blog1', content: 'This is a test blog content.', category: 'Test Category', userId: user._id });
+      blog = new Blog({ title: 'blog1', content: 'This is a test blog content.', category: ['Test Category'], userId: user._id });
       await blog.save();
 
       id = blog._id;
@@ -183,7 +183,7 @@ describe('/api/blogs', () => {
       id = 1;
 
       const res = await exec();
-
+      console.log('Response Body:', res); // Debugging log
       expect(res.status).toBe(404);
     });
 
@@ -229,7 +229,7 @@ describe('/api/blogs', () => {
       await user.save();
 
       token = user.generateAuthToken();
-      blog = new Blog({ title: 'blog title', content: 'This is a test blog content.', category: 'Test Category', userId: user._id });
+      blog = new Blog({ title: 'blog title', content: 'This is a test blog content.', category: ['Test Category'], userId: user._id });
       await blog.save();
 
       id = blog._id;
