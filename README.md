@@ -41,7 +41,7 @@ A fully-featured RESTful API for managing user authentication and blog content u
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/blog-api.git
+   git clone [https://github.com/yourusername/blog-api.git](https://github.com/ramo772/blog-managment-node-js.git)
    cd blog-api
    ```
 
