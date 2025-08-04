@@ -50,6 +50,15 @@ A fully-featured RESTful API for managing user authentication and blog content u
    npm install
    ```
 
+3. Start MongoDB:
+   Ensure MongoDB is installed on your system. Run the following command to start the MongoDB server:
+   ```bash
+   mongod --dbpath ~/data/db
+   ```
+   If the `~/data/db` directory does not exist, create it using:
+   ```bash
+   mkdir -p ~/data/db
+   ```
 ---
 
 ## ⚙️ Configuration
