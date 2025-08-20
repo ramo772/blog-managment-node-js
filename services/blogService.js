@@ -3,7 +3,6 @@ const STATUS_CODES = require("../helpers/statusCodes");
 const blogRepository = require("../repositories/blogRepository");
 const userRepository = require("../repositories/userRepository");
 const _ = require('lodash');
-const e = require("express");
 
 const getAllBlogs = async (queryParams = {}) => {
     try {
@@ -22,7 +21,7 @@ const getAllBlogs = async (queryParams = {}) => {
 
         const blogs = await blogRepository.getAllWith(['userId'], true, filter, { page, limit });
         
-        const { docs, ...paginationWithoutDocs } = blogs;
+        const {  ...paginationWithoutDocs } = blogs;
 
         return {
             blogs: { docs: blogs.docs.map(blog => _.pick(blog, ['_id', 'title', 'content', 'category', 'userId.name'])), },
@@ -63,12 +62,12 @@ const getBlogByID = async (blogID) => {
 
 const create = async (blogData) => {
     try {
-        user = await userRepository.findById(blogData.userId);
+        const user = await userRepository.findById(blogData.userId);
         if (!user) return {
             statusCode: STATUS_CODES.NOT_FOUND,
             message: "User not found."
         };
-        blog = await blogRepository.create({
+        let blog = await blogRepository.create({
             title: blogData.title,
             content: blogData.content,
             category: blogData.category,
@@ -99,7 +98,7 @@ const update = async (id, data) => {
                 message: "Blog does not belong to the user."
             };
         }
-        updatedBlog = await blogRepository.update(id, data)
+        let updatedBlog = await blogRepository.update(id, data)
         if (!updatedBlog) throw new Error("Error updating blog.");
         updatedBlog = await blogRepository.findById(id);
 

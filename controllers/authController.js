@@ -1,4 +1,3 @@
-const c = require("config")
 const { createUser, loginUser } = require("../services/userService")
 const _ = require('lodash');
 

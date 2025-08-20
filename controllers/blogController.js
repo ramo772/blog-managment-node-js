@@ -1,6 +1,4 @@
-const c = require("config")
 const { create, updateBlogService, deleteBlogService, getAllBlogs, getBlogByID } = require("../services/blogService")
-const _ = require('lodash');
 const { success , error} = require("../helpers/responses");
 const STATUS_CODES = require("../helpers/statusCodes");
 

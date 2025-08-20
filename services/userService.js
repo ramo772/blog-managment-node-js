@@ -7,9 +7,9 @@ const checkUserExists = async (email) => {
   return user;
 };
 const createUser = async (userData) => {
-  userExist =await checkUserExists(userData.email);
+  const userExist =await checkUserExists(userData.email);
   if (userExist) throw new Error("User already registered.");
-  user = await userRepository.create({
+  let user = await userRepository.create({
     name: userData.name,
     email: userData.email,
     password: userData.password
@@ -23,7 +23,7 @@ const createUser = async (userData) => {
 
 }
 const loginUser = async (userData) => {
-  user = await checkUserExists(userData.email);
+  let user = await checkUserExists(userData.email);
   if (!user) throw new Error("Invalid email or password.");
   const validPassword = await bcrypt.compare(userData.password, user.password);
   if (!validPassword) throw new Error("Invalid email or password.");
