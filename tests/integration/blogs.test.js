@@ -80,9 +80,7 @@ describe('/api/blogs', () => {
         .send({
           title,
           content,
-          category,
-          userId
-        });
+          category        });
     }
 
     beforeEach(async () => {
@@ -124,6 +122,7 @@ describe('/api/blogs', () => {
 
     it('should return the blog if it is valid', async () => {
       const res = await exec();
+      console.log('Response Body:', res.body); // Debugging log
       expect(res.status).toBe(201);
       expect(res.body.data.blog).toHaveProperty('_id');
       expect(res.body.data.blog).toHaveProperty('title', title);
@@ -213,10 +212,7 @@ describe('/api/blogs', () => {
     let token;
     let blog;
     let id;
-    let userId;
-    let title;
-    let content;
-    let category;
+   
     const exec = async () => {
       return await request(server)
         .delete('/api/blogs/' + id)

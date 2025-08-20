@@ -25,7 +25,9 @@ const getOne = async (req, res) => {
 }
 const createBlog = async (req, res) => {
     try {
-        const response = await create(req.body)
+        const { title, content, category } = req.body; 
+        const createData = { title, content, category, userId: req.headers['user-id'] }; 
+        const response = await create(createData)
         success(res, response.statusCode,response);
     } catch (err) {
         return error(res, STATUS_CODES.INTERNAL_SERVER_ERROR, err.message);
@@ -34,7 +36,9 @@ const createBlog = async (req, res) => {
 }
 const updateBlog = async (req, res) => {
     try {
-        const response = await updateBlogService(req.params.id, req.body)
+        const { title, content, category } = req.body; 
+        const updateData = { title, content, category, userId: req.headers['user-id'] }; 
+        const response = await updateBlogService(req.params.id, updateData)
         success(res, response.statusCode, response);
     } catch (err) {
         return error(res, STATUS_CODES.INTERNAL_SERVER_ERROR, err.message);
@@ -43,7 +47,7 @@ const updateBlog = async (req, res) => {
 }
 const deleteBlog = async (req, res) => {
     try {
-        const response = await deleteBlogService(req.params.id, req.body.userId)
+        const response = await deleteBlogService(req.params.id, req.headers['user-id'])
         success(res, response.statusCode, response );
     } catch (err) {
         return error(res, STATUS_CODES.INTERNAL_SERVER_ERROR, err.message);
